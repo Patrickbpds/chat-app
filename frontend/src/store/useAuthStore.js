@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
-import { axiosInstance } from "../lib/axios";
+import { axiosInstance } from "../lib/axios.js";
 
 export const useAuthStore = create((set) => ({
     authUser: null,
     isSigningUp: false,
-    isLoggingIng: false,
+    isLoggingIn: false,
     isUpdatingProfile: false,
 
     isCheckingAuth: true,
@@ -14,8 +14,8 @@ export const useAuthStore = create((set) => ({
         try {
             const res = await axiosInstance.get("/auth/check");
             set({ authUser: res.data });
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
-            console.log("Error in checkAuth:", error);
             set({ authUser: null });
 
         } finally {
@@ -26,8 +26,8 @@ export const useAuthStore = create((set) => ({
         set({ isSigningUp: true });
         try {
             const res = await axiosInstance.post("/auth/signup", data);
-            toast.sucess("Account created successfully");
-            set({ authUser: res.data });
+            toast.success("Account created successfully");
+            set({ authUser: res });
 
         } catch (error) {
             toast.error(error.response.data.message);
@@ -36,7 +36,7 @@ export const useAuthStore = create((set) => ({
         }
     },
     login: async (data) => {
-        set({ isLoggingIng: true });
+        set({ isLoggingIn: true });
         try {
             const res = await axiosInstance.post("/auth/login", data);
             set({ authUser: res.data });
@@ -44,7 +44,7 @@ export const useAuthStore = create((set) => ({
         } catch (error) {
             toast.error(error.response.data.message);
         } finally {
-            set({ isLoggingIng: false });
+            set({ isLoggingIn: false });
         }
     },
     logout: async () => {

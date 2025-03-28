@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import AuthImagePattern from "../components/AuthImagePattern";
-import { Eye, EyeOff, Loader2, Mail, MessageSquare } from "lucide-react";
+
 import { Link } from "react-router-dom";
+import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,7 +12,6 @@ const LoginPage = () => {
     password: "",
   });
   const { login, isLoggingIn } = useAuthStore();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     login(formData);
